@@ -48,10 +48,14 @@ def precision_at_m(users, ranks, test, m):
     precision = np.zeros(users.shape[0])
     for en, user in enumerate(users):
         user_test = test[test[:, 0] == user]
-        precision[en] = \
-            np.sum(np.isin(ranks[en, 0:m], user_test[:, 1])).astype(np.float) / np.minimum(m, user_test[:, 1].shape[0])
+        denominator = np.minimum(m, user_test[:, 1].shape[0])
+        numerator = np.sum(np.isin(ranks[en, 0:m], user_test[:, 1])).astype(np.float)
+        if denominator == 0:
+            precision[en] = -13
+        else:
+            precision[en] = numerator/ denominator
 
-    return precision
+    return precision[precision != -13]
 
 
 def score_recommendations(rankings, test_users, test, p=1000, m=20, batch_size=500):
