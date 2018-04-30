@@ -15,8 +15,8 @@ from helpers import nDCG, precision_at_m
 loc = "/Users/ekansh/repos/data/{}"
 ds = "nyt/"
 print("Dataset is : {}".format(ds))
-# loss = 'kullback-leibler'
-loss = "frobenius"
+loss = 'kullback-leibler'
+# loss = "frobenius"
 #
 with open(loc.format(ds) + 'data.pkl') as f:
     data = pickle.load(f)
